@@ -1,0 +1,44 @@
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-plugin-tracing
+
+service: awss3objectcount
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: eu-central-1
+  tracing: true
+  apiKeys:
+    - AwsS3ObjectCountKey
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "cloudwatch:GetMetricData"
+        - "s3:ListBucket"
+        - "s3:ListAllMyBuckets"
+      Resource: '*'
+  iamManagedPolicies:
+    - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+  usagePlan:
+    quota:
+      limit: 100
+      offset: 2
+      period: MONTH
+    throttle:
+      burstLimit: 20
+      rateLimit: 10
+
+functions:
+  awss3objectcount:
+    handler: handler.awss3objectcount
+    description: Main function to check s3 object count
+    memorySize: 128
+    timeout: 10
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+          private: true
