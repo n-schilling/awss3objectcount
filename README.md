@@ -15,5 +15,5 @@ You can use this HTTP endpoint to integrate the object count in a monitor system
 ## How to install
 
 1. Clone this repository
-2. run ```sls deploy``` to deploy the solution to AWS - please not the API-ID and the X-API-Key in the output
-3. Test the endpoint via ```curl -X GET 'https://<<api-id>>>.eu-central-1.amazonaws.com/dev/?s3BucketName=<<<bucket-name>>>' --header "X-Api-Key:<<<API-Key>>>"```
+2. Deploy the solution to AWS with ```sls deploy```. Please note the API-ID and the X-API-Key in the output
+3. Test the endpoint via ```curl -X GET 'https://<<gateway id>>.execute-api.<<region>>.amazonaws.com/dev/?s3BucketName=<<<bucket-name>>>' --header "X-Api-Key:<<<API-Key>>>"```
